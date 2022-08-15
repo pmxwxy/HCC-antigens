@@ -1,3 +1,4 @@
+
 library(maftools)
 
 laml.maf <- "output/mutation.data.type.txt" 
@@ -33,8 +34,8 @@ ann_colors = list(Gender = Gender, TNM_stage=TNM_stage, Liver_cirrhosis=Liver_ci
                   Lymph_node_metastasis=Lymph_node_metastasis,Tumor_thrombus=Tumor_thrombus)
 
 
-pdf("figs/Oncoplot.mutation.pdf", width = 10, height = 8)
-oncoplot(maf = laml, top=22,
+pdf("figs/Oncoplot.pdf", width = 10, height = 8)
+oncoplot(maf = subsetMaf(maf = laml, query = "Type == 'SNV'"), top=22,
          clinicalFeatures = c('Gender', 'TNM_stage','Liver_cirrhosis','Tumor_thrombus'),
          sortByAnnotation = FALSE, keepGeneOrder=FALSE,
          anno_height=1.5, gene_mar = 6, bgCol="gray90",
@@ -43,6 +44,6 @@ oncoplot(maf = laml, top=22,
 dev.off()
 
 
-pdf("figs/Oncoplot.interaction.pdf", width = 10, height = 8)
-somaticInteractions(maf = laml, top = 22, pvalue = c(0.05, 0.1))
+pdf("figs/mut_interaction.pdf", width = 8, height = 6)
+somaticInteractions(maf = subsetMaf(maf = laml, query = "Type == 'SNV'"), top = 22, pvalue = c(0.05, 0.1), fontSize = 0.75)
 dev.off()
